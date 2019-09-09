@@ -1,0 +1,17 @@
+Intro
+ * me apresentar
+ * falar da apresentação mostrando os pontos principais que notei codando
+ * considerar apresentação como um pairing
+ * falar do problema de reserva para os não familiarizados
+
+data_clump
+ * mover logica do final de semana para classe/metodo e totalPrice
+  * metodo menor
+    * podera ser reusado( podera ter média de preco, mais barato)
+    * nao preciso ler o código
+    * o nome já diz tudo não preciso me preocupar com a implementação
+ * identificando data_clump no "client_type" e "...dates" passado em 8 lugares
+ * extrair para Booking
+ * ganho imediato: acoplamento  de parametro reduzido
+  * faz a mudança futura ser mais facil pq agora temos dois componentes que não dependem um do outro
+  * menos argumentos, menos acoplamento
