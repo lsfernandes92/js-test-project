@@ -10,8 +10,16 @@ data_clump
     * podera ser reusado( podera ter média de preco, mais barato)
     * nao preciso ler o código
     * o nome já diz tudo não preciso me preocupar com a implementação
+  * swicth case em vez de if para bater o olho condicao sem recalculos mentais
  * identificando data_clump no "client_type" e "...dates" passado em 8 lugares
- * extrair para Booking
+ * extrair para Reservation
  * ganho imediato: acoplamento  de parametro reduzido
   * faz a mudança futura ser mais facil pq agora temos dois componentes que não dependem um do outro
   * menos argumentos, menos acoplamento
+
+falta de coesão calculo de reserva
+  * classe pode ser gigante com diferentes tipos de cliente encadeando mts ifs
+  * melhora o gerenciamento
+    * logica de calculo que poderia propagar
+    * manter arquivo nao seria uma tarefa legal
+  * levar regra de calculo para cada cliente levando a classe não coesa
