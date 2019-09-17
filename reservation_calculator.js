@@ -2,60 +2,50 @@ const RegularClient = require('./regular_client');
 const RewardClient = require('./reward_client');
 
 class ReservationCalculator {
-  constructor(hotel, reservation) {
-    this._hotel = hotel;
-    this._reservation = reservation;
+  selectBestDealHotel(hotels, reservation) {
+    let bestHotel = this._setHotelPriceProp(hotels[0], reservation);
+
+    hotels.shift();
+
+    hotels.forEach(hotel => {
+        hotel = this._setHotelPriceProp(hotel, reservation);
+
+        bestHotel = this._compareBestHotel(hotel, bestHotel);
+    });
+
+    return bestHotel.toString();
   }
 
-  calculate() {
-    switch (this._reservation.clientType) {
+  _compareBestHotel(hotel1, hotel2) {
+    if (hotel1.price < hotel2.price) {
+      return hotel1;
+    }
+    else if (hotel1.price === hotel2.price && hotel1.rank > hotel2.rank) {
+      return hotel1;
+    }
+    else {
+      return hotel2;
+    }
+  }
+
+  _setHotelPriceProp(hotel, reservation) {
+    hotel.price = this._calculate(hotel, reservation);
+
+    return hotel;
+  }
+
+  _calculate(hotel, reservation) {
+    switch (reservation.clientType) {
       case 'regular':
-        return new RegularClient(this._hotel, this._reservation).calculate();
+        return new RegularClient(hotel, reservation).calculate();
         break;
       case 'reward':
-        return new RewardClient(this._hotel, this._reservation).calculate();
+        return new RewardClient(hotel, reservation).calculate();
         break;
       default:
         return 0;
     }
   }
-
-  selectBestDealHotel(hotels, reservation) {
-    // let bestHotel = {
-    //   name: hotels[0].name,
-    //   rank: hotels[0].rank,
-    //   price: calculate(hotels[0], reservation)
-    // };
-    // 
-    // hotels.forEach(hotel => {
-    //   comparePrices(hotel, bestHotel);
-    //   compareRank(hotel1, bestHotel);
-    // });
-    //
-    // return bestHotel;
-  }
-  //
-  // comparePrices(hotel1, hotel2) {
-  //   hotelPrice = this.calculate(hotel, reservation);
-  //
-  //   if (hotelPrice < bestHotel.price) {
-  //     setBestHotelObjProps(bestHotel, hotel.name, hotel.rank, hotelPrice);
-  //   }
-  // }
-  //
-  // compareRank(hotel1, hotel2) {
-  //   hotelPrice = this.calculate(hotel, reservation);
-  //
-  //   if (hotelPrice === bestHotel.price && hotel.rank > bestHotel.rank) {
-  //     setBestHotelObjProps(bestHotel, hotel.name, hotel.rank, hotelPrice);
-  //   }
-  // }
-  //
-  // setBestHotelObjProps(obj, name, rank, price) {
-  //   obj.name = name;
-  //   obj.rank = rank;
-  //   obj.price = price;
-  // }
 }
 
 module.exports = ReservationCalculator;
