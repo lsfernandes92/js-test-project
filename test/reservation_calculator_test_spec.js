@@ -2,19 +2,20 @@
 
 const chai = require('chai')
 const expect = chai.expect
+
 const ReservationCalculator = require("../reservation_calculator");
 const Hotel = require("../hotel");
 const Reservation = require("../reservation");
 
 describe('ReservationCalculator', function() {
-  describe('.calculate', function() {
-    let hotel;
+  describe('.selectBestDealHotel', function() {
+    let lakewood, bridgewood, ridgewood;
     let reservation;
     let result;
 
     before(function() {
-      hotel = new Hotel(
-        'fOO', 1,
+      lakewood = new Hotel(
+        'lakewood', 3,
         {
           weekPriceRegularClient: 110,
           weekendPriceRegularClient: 90,
@@ -22,55 +23,92 @@ describe('ReservationCalculator', function() {
           weekendPriceRewardClient: 80
         }
       );
+
+      bridgewood = new Hotel(
+        'bridgewood', 4,
+        {
+          weekPriceRegularClient: 160,
+          weekendPriceRegularClient: 60,
+          weekPriceRewardClient: 110,
+          weekendPriceRewardClient: 50
+        }
+      );
+
+      ridgewood = new Hotel(
+        'ridgewood', 5,
+        {
+          weekPriceRegularClient: 220,
+          weekendPriceRegularClient: 150,
+          weekPriceRewardClient: 100,
+          weekendPriceRewardClient: 40
+        }
+      );
     });
 
     describe('when client is regular', function() {
-      it('should return the price for week staying', function(){
+      it('returns the more convenient hotel for week staying', function(){
         reservation = new Reservation('Regular', '2Sep2019');
-        result = new ReservationCalculator(hotel, reservation).calculate();
+        result = new ReservationCalculator().selectBestDealHotel(
+          [lakewood, bridgewood, ridgewood], reservation
+        );
 
-        expect(result).to.equal(110);
+        expect(result).to.include('lakewood');
       });
 
-      it('should return the price for weekend staying', function(){
+      it('returns the more convenient hotel for weekend staying', function(){
         reservation = new Reservation('Regular', '7Sep2019');
-        result = new ReservationCalculator(hotel, reservation).calculate();
+        result = new ReservationCalculator().selectBestDealHotel(
+          [lakewood, bridgewood, ridgewood],
+          reservation
+        );
 
-        expect(result).to.equal(90);
+        expect(result).to.include('bridgewood');
       });
 
-      it('should return the total price for the disposal dates', function(){
+      it('returns the best hotel for the disposal dates', function(){
         reservation = new Reservation('Regular', '6Sep2019', '7Sep2019');
-        result = new ReservationCalculator(hotel, reservation).calculate();
+        result = new ReservationCalculator().selectBestDealHotel(
+          [lakewood, bridgewood, ridgewood],
+          reservation
+        );
 
-        expect(result).to.equal(200);
+        expect(result).to.include('lakewood');
       });
 
       xit('should return the price for the disposal dates', function(){
-        expect(hotel.totalPriceFromDates(new Reservation('', '7Sep2019'))).to.equal(130);
+        expect(lakewood.totalPriceFromDates(new Reservation('', '7Sep2019'))).to.equal(130);
       });
     });
 
     describe('when client is reward', function() {
-      it('should return the price for week staying', function(){
+      it('returns the more convenient hotel for week staying', function(){
         reservation = new Reservation('Reward', '2Sep2019');
-        result = new ReservationCalculator(hotel, reservation).calculate();
+        result = new ReservationCalculator().selectBestDealHotel(
+          [lakewood, bridgewood, ridgewood],
+          reservation
+        );
 
-        expect(result).to.equal(80);
+        expect(result).to.include('lakewood');
       });
 
-      it('should return the price for weekend staying', function(){
+      it('returns the more convenient hotel for weekend staying', function(){
         reservation = new Reservation('Reward', '7Sep2019');
-        result = new ReservationCalculator(hotel, reservation).calculate();
+        result = new ReservationCalculator().selectBestDealHotel(
+          [lakewood, bridgewood, ridgewood],
+          reservation
+        );
 
-        expect(result).to.equal(80);
+        expect(result).to.include('ridgewood');
       });
 
-      it('should return the total price for the disposal dates', function(){
+      it('returns the best hotel for the disposal dates', function(){
         reservation = new Reservation('Reward', '7Sep2019', '8Sep2019', '9Sep2019');
-        result = new ReservationCalculator(hotel, reservation).calculate();
+        result = new ReservationCalculator().selectBestDealHotel(
+          [lakewood, bridgewood, ridgewood],
+          reservation
+        );
 
-        expect(result).to.equal(240);
+        expect(result).to.include('ridgewood');
       });
     });
   });
