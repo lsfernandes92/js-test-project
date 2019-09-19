@@ -3,20 +3,21 @@ const RewardClient = require('./reward_client');
 
 class ReservationCalculator {
   selectBestDealHotel(hotels, reservation) {
-    let bestHotel = this._setHotelPriceProp(hotels[0], reservation);
+    let bestHotel = hotels[0];
+    this._setHotelPriceProp(bestHotel, reservation);
 
     hotels.shift();
 
     hotels.forEach(hotel => {
-        hotel = this._setHotelPriceProp(hotel, reservation);
+        this._setHotelPriceProp(hotel, reservation);
 
-        bestHotel = this._compareBestHotel(hotel, bestHotel);
+        bestHotel = this._compareHotels(hotel, bestHotel);
     });
 
     return bestHotel.toString();
   }
 
-  _compareBestHotel(hotel1, hotel2) {
+  _compareHotels(hotel1, hotel2) {
     if (hotel1.price < hotel2.price) {
       return hotel1;
     }
