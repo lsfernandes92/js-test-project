@@ -7,6 +7,8 @@ class ReservationCalculator {
 
     let bestHotel = hotels[0];
 
+    hotels.shift();
+
     hotels.forEach(hotel => {
         bestHotel = this._compareHotels(hotel, bestHotel);
     });
