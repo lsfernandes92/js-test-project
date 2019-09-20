@@ -1,25 +1,41 @@
 Intro
- * me apresentar
- * falar da apresentação mostrando os pontos principais que notei codando
- * considerar apresentação como um pairing
- * falar do problema de reserva para os não familiarizados
+  * me apresentar 5min
+  * falar da apresentação mostrando os pontos principais que notei codando
+  * considerar apresentação como um pairing
+  * falar do problema de reserva para os não familiarizados
 
-data_clump
- * mover logica do final de semana para classe/metodo e totalPrice
+parametros classe hotel1 2min
+  * muito confuso no momento de instanciar
+  * poderia extrair os preco para um objeto, mas quis deixar como caracteristica da classe hotel
+  * de 6 parametros para 3
+
+data_clump 3min
+  * identificando data_clump no "client_type" e ...dates" passado em 8 lugares
+  * extrair para Reservation
+  * ganho imediato: acoplamento  de parametro reduzido
+   * faz a mudança futura ser mais facil pq agora temos dois componentes que não dependem um do outro
+   * menos argumentos, menos acoplamento
+
+falta de coesão calculo de reserva 10 min
+  * mover logica do final de semana para classe/metodo e totalPrice
   * metodo menor
     * podera ser reusado( podera ter média de preco, mais barato)
-    * nao preciso ler o código
-    * o nome já diz tudo não preciso me preocupar com a implementação
   * swicth case em vez de if para bater o olho condicao sem recalculos mentais
- * identificando data_clump no "client_type" e "...dates" passado em 8 lugares
- * extrair para Reservation
- * ganho imediato: acoplamento  de parametro reduzido
-  * faz a mudança futura ser mais facil pq agora temos dois componentes que não dependem um do outro
-  * menos argumentos, menos acoplamento
-
-falta de coesão calculo de reserva
   * classe pode ser gigante com diferentes tipos de cliente encadeando mts ifs
   * melhora o gerenciamento
     * logica de calculo que poderia propagar
     * manter arquivo nao seria uma tarefa legal
   * levar regra de calculo para cada cliente levando a classe não coesa
+
+encapsulamento/extrair cod 5min
+  * nao preciso ler o código
+  * o nome já diz tudo não preciso me preocupar com a implementação
+    * metodo calculate dos r*****_client
+    * metodos privados do reservation calculator
+
+pontos a melhorar 5min
+  * reservation calculator virou um god object
+  * acoplamento de parametros
+  * falta mais abstracoes
+  * muitas chamadas do objeto hotel no metodo "_compareHotels" tell dont ask
+  * desenvolvimento é incremental nunca faria uma logica perfeita de primeira
