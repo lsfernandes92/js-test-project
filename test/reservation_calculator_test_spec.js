@@ -66,7 +66,7 @@ describe('ReservationCalculator', function() {
       });
 
       it('returns the best hotel for the disposal dates', function(){
-        reservation = new Reservation('Regular', '6Sep2019', '7Sep2019');
+        reservation = new Reservation('Regular', '16Mar2009', '17Mar2009', '18Mar2009');
         result = new ReservationCalculator().selectBestDealHotel(
           [lakewood, bridgewood, ridgewood],
           reservation
@@ -102,7 +102,7 @@ describe('ReservationCalculator', function() {
       });
 
       it('returns the best hotel for the disposal dates', function(){
-        reservation = new Reservation('Reward', '7Sep2019', '8Sep2019', '9Sep2019');
+        reservation = new Reservation('Reward', '26Mar2009', '27Mar2009', '28Mar2009');
         result = new ReservationCalculator().selectBestDealHotel(
           [lakewood, bridgewood, ridgewood],
           reservation
