@@ -3,7 +3,7 @@ const ReservationCalculator = require("./reservation_calculator");
 const Reservation = require("./reservation");
 
 let lakewood = new Hotel(
-  'Lakewood', 1,
+  'Lakewood', 3,
   {
     weekPriceRegularClient: 110,
     weekendPriceRegularClient: 80,
@@ -15,7 +15,7 @@ let bridgewood = new Hotel(
   'Bridgewood', 2,
   {
     weekPriceRegularClient: 110,
-    weekendPriceRegularClient: 90,
+    weekendPriceRegularClient: 80,
     weekPriceRewardClient: 110,
     weekendPriceRewardClient: 50
   }
@@ -30,4 +30,4 @@ let ridgewood = new Hotel(
   }
 );
 
-console.log(new ReservationCalculator().selectBestDealHotel([lakewood, bridgewood], new Reservation('regular', '6Sep2019', '7Sep2019')));
+console.log(new ReservationCalculator([lakewood, bridgewood], new Reservation('regular', '6Sep2019', '7Sep2019')).selectBestDealHotel());
