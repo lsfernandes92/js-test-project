@@ -1,3 +1,5 @@
+const DateHandler = require('./date_handler');
+
 class RegularClient {
   constructor(hotel, reservation) {
     this._hotel = hotel;
@@ -15,16 +17,10 @@ class RegularClient {
   }
 
   _priceFromDate(date) {
-    const day = new Date(date).getDay();
-
-    return this._evaluatePriceRegularClient(day);
-  }
-
-  _evaluatePriceRegularClient(dayOfWeek) {
-    let weekend = (dayOfWeek === 6) || (dayOfWeek === 0);
-
     return (
-      weekend ? this._hotel.weekendPriceRegularClient : this._hotel.weekPriceRegularClient
+      new DateHandler(date).isWeekend()
+        ? this._hotel.weekendPriceRegularClient
+        : this._hotel.weekPriceRegularClient
     );
   }
 }
