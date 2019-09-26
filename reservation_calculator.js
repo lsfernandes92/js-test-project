@@ -1,31 +1,23 @@
 const RegularClient = require('./regular_client');
 const RewardClient = require('./reward_client');
+const HotelComparison = require('./hotel_comparison');
 
 class ReservationCalculator {
-  selectBestDealHotel(hotels, reservation) {
-    this._calculateEachHotelPrice(hotels, reservation);
-
-    let bestHotel = hotels[0];
-
-    hotels.shift();
-
-    hotels.forEach(hotel => {
-        bestHotel = this._compareHotels(hotel, bestHotel);
-    });
-
-    return bestHotel.toString();
+  constructor(hotels, reservation) {
+    this._hotels = this._calculateEachHotelPrice(hotels, reservation);
+    this._reservation = reservation;
+    this._bestHotel = this._hotels[0];
   }
 
-  _compareHotels(hotel1, hotel2) {
-    if (hotel1.price < hotel2.price) {
-      return hotel1;
-    }
-    else if (hotel1.price === hotel2.price && hotel1.rank > hotel2.rank) {
-      return hotel1;
-    }
-    else {
-      return hotel2;
-    }
+  selectBestDealHotel() {
+    this._hotels.shift();
+
+    this._hotels.forEach(hotel => {
+      this._bestHotel =
+        new HotelComparison().selectHotelWithBestPrice(hotel, this._bestHotel);
+    });
+
+    return this._bestHotel.toString();
   }
 
   _calculateEachHotelPrice(hotels, reservation) {
