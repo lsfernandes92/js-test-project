@@ -48,29 +48,27 @@ describe('ReservationCalculator', function() {
     describe('when client is regular', function() {
       it('returns the more convenient hotel for week staying', function(){
         reservation = new Reservation('Regular', '2Sep2019');
-        result = new ReservationCalculator().selectBestDealHotel(
+        result = new ReservationCalculator(
           [lakewood, bridgewood, ridgewood], reservation
-        );
+        ).selectBestDealHotel();
 
         expect(result).to.include('lakewood');
       });
 
       it('returns the more convenient hotel for weekend staying', function(){
         reservation = new Reservation('Regular', '7Sep2019');
-        result = new ReservationCalculator().selectBestDealHotel(
-          [lakewood, bridgewood, ridgewood],
-          reservation
-        );
+        result = new ReservationCalculator(
+          [lakewood, bridgewood, ridgewood], reservation
+        ).selectBestDealHotel();
 
         expect(result).to.include('bridgewood');
       });
 
       it('returns the best hotel for the disposal dates', function(){
         reservation = new Reservation('Regular', '16Mar2009', '17Mar2009', '18Mar2009');
-        result = new ReservationCalculator().selectBestDealHotel(
-          [lakewood, bridgewood, ridgewood],
-          reservation
-        );
+        result = new ReservationCalculator(
+          [lakewood, bridgewood, ridgewood], reservation
+        ).selectBestDealHotel();
 
         expect(result).to.include('lakewood');
       });
@@ -83,30 +81,27 @@ describe('ReservationCalculator', function() {
     describe('when client is reward', function() {
       it('returns the more convenient hotel for week staying', function(){
         reservation = new Reservation('Reward', '2Sep2019');
-        result = new ReservationCalculator().selectBestDealHotel(
-          [lakewood, bridgewood, ridgewood],
-          reservation
-        );
+        result = new ReservationCalculator(
+          [lakewood, bridgewood, ridgewood], reservation
+        ).selectBestDealHotel();
 
         expect(result).to.include('lakewood');
       });
 
       it('returns the more convenient hotel for weekend staying', function(){
         reservation = new Reservation('Reward', '7Sep2019');
-        result = new ReservationCalculator().selectBestDealHotel(
-          [lakewood, bridgewood, ridgewood],
-          reservation
-        );
+        result = new ReservationCalculator(
+          [lakewood, bridgewood, ridgewood], reservation
+        ).selectBestDealHotel();
 
         expect(result).to.include('ridgewood');
       });
 
       it('returns the best hotel for the disposal dates', function(){
         reservation = new Reservation('Reward', '26Mar2009', '27Mar2009', '28Mar2009');
-        result = new ReservationCalculator().selectBestDealHotel(
-          [lakewood, bridgewood, ridgewood],
-          reservation
-        );
+        result = new ReservationCalculator(
+          [lakewood, bridgewood, ridgewood], reservation
+        ).selectBestDealHotel();
 
         expect(result).to.include('ridgewood');
       });
